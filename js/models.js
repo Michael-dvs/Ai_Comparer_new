@@ -55,12 +55,8 @@ function loadModels() {
                             <td>${capabilitiesText}</td>
                             <td>${escapeHtml(model.user_email)}</td>
                             <td class="action-buttons">
-                                <button class="btn-icon btn-edit" data-id="${model.id}" title="Edit">
-                                    ✏️
-                                </button>
-                                <button class="btn-icon btn-delete" data-id="${model.id}" title="Delete">
-                                    🗑️
-                                </button>
+                                <button class="btn-icon btn-edit" data-id="${model.id}" title="Edit">✏️</button>
+                                <button class="btn-icon btn-delete" data-id="${model.id}" title="Delete">🗑️</button>
                             </td>
                         </tr>
                     `);
