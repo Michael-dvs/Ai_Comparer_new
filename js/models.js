@@ -53,6 +53,7 @@ function loadModels() {
                             <td>${formatNumber(model.context_length)} tokens</td>
                             <td><span class="badge-score">${model.benchmark_score}</span></td>
                             <td>${capabilitiesText}</td>
+                            <td>${escapeHtml(model.user_email)}</td>
                             <td class="action-buttons">
                                 <button class="btn-icon btn-edit" data-id="${model.id}" title="Edit">
                                     ✏️
