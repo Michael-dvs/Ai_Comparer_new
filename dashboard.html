@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Comparer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">AI Comparer</h1>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="compare.html" class="nav-link">Compare Models</a>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <h2>AI Models Dashboard</h2>
+            <button id="addModelBtn" class="btn btn-primary">+ Tambah Model AI</button>
+        </div>
+
+        <!-- Alert untuk menampilkan error/success message -->
+        <div id="alert" class="alert" style="display: none;"></div>
+
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="loading-container" style="display: none;">
+            <div class="loader"></div>
+            <p>Loading data...</p>
+        </div>
+
+        <!-- Models Table -->
+        <div class="table-container">
+            <table id="modelsTable">
+                <thead>
+                    <tr>
+                        <th>Nama Model</th>
+                        <th>Provider</th>
+                        <th>Context Length</th>
+                        <th>Benchmark Score</th>
+                        <th>Capabilities</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="modelsTableBody">
+                    <!-- Data akan diisi oleh JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal untuk Tambah/Edit Model -->
+    <div id="modelModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Tambah Model AI</h2>
+
+            <form id="modelForm">
+                <input type="hidden" id="modelId" name="modelId">
+
+                <div class="form-group">
+                    <label for="modelName">Nama Model *</label>
+                    <input type="text" id="modelName" name="modelName" required placeholder="Contoh: GPT-4, Claude 3">
+                </div>
+
+                <div class="form-group">
+                    <label for="modelProvider">Provider *</label>
+                    <input type="text" id="modelProvider" name="modelProvider" required placeholder="Contoh: OpenAI, Anthropic">
+                </div>
+
+                <div class="form-group">
+                    <label for="contextLength">Context Length (tokens) *</label>
+                    <input type="number" id="contextLength" name="contextLength" required placeholder="Contoh: 128000">
+                </div>
+
+                <div class="form-group">
+                    <label for="benchmarkScore">Benchmark Score (0-100) *</label>
+                    <input type="number" id="benchmarkScore" name="benchmarkScore" step="0.01" min="0" max="100" required placeholder="Contoh: 85.5">
+                </div>
+
+                <div class="form-group">
+                    <label for="capabilities">Capabilities (JSON format)</label>
+                    <textarea id="capabilities" name="capabilities" rows="4" placeholder='{"text": true, "vision": true, "code": true}'></textarea>
+                    <small>Format: {"key": "value"} atau kosongkan</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="saveModelBtn">
+                        <span class="btn-text">Simpan</span>
+                        <span class="loader" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Supabase configuration -->
+    <script src="js/config.js"></script>
+
+    <!-- Authentication logic -->
+    <script src="js/auth.js"></script>
+
+    <!-- Models CRUD logic -->
+    <script src="js/models.js"></script>
+
+    <script>
+        // jQuery: Initialize dashboard when page loads
+        $(document).ready(function() {
+            // Cek autentikasi user dengan JWT
+            checkAuth();
+
+            // Load semua models dari database
+            loadModels();
+        });
+    </script>
+</body>
+</html>

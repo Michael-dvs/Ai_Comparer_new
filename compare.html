@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Models - AI Comparer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">AI Comparer</h1>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="compare.html" class="nav-link active">Compare Models</a>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <h2>Compare AI Models</h2>
+        </div>
+
+        <!-- Alert untuk menampilkan error/success message -->
+        <div id="alert" class="alert" style="display: none;"></div>
+
+        <!-- Model Selection -->
+        <div class="compare-selection">
+            <div class="selection-box">
+                <h3>Model 1</h3>
+                <select id="model1Select" class="model-select">
+                    <option value="">-- Pilih Model --</option>
+                </select>
+            </div>
+
+            <div class="selection-box">
+                <h3>Model 2</h3>
+                <select id="model2Select" class="model-select">
+                    <option value="">-- Pilih Model --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="compare-action">
+            <button id="compareBtn" class="btn btn-primary btn-large">
+                <span class="btn-text">Bandingkan</span>
+                <span class="loader" style="display: none;"></span>
+            </button>
+        </div>
+
+        <!-- Comparison Result -->
+        <div id="comparisonResult" class="comparison-result" style="display: none;">
+            <h3>Hasil Perbandingan</h3>
+
+            <div class="comparison-cards">
+                <!-- Model 1 Card -->
+                <div class="comparison-card">
+                    <h4 id="model1Name" class="model-card-title"></h4>
+                    <div class="model-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Provider:</span>
+                            <span id="model1Provider" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Context Length:</span>
+                            <span id="model1Context" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Benchmark Score:</span>
+                            <span id="model1Score" class="detail-value score"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Capabilities:</span>
+                            <div id="model1Capabilities" class="capabilities-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VS Divider -->
+                <div class="vs-divider">
+                    <span>VS</span>
+                </div>
+
+                <!-- Model 2 Card -->
+                <div class="comparison-card">
+                    <h4 id="model2Name" class="model-card-title"></h4>
+                    <div class="model-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Provider:</span>
+                            <span id="model2Provider" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Context Length:</span>
+                            <span id="model2Context" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Benchmark Score:</span>
+                            <span id="model2Score" class="detail-value score"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Capabilities:</span>
+                            <div id="model2Capabilities" class="capabilities-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="comparison-table">
+                <h4>Perbandingan Detail</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspek</th>
+                            <th id="compTableModel1"></th>
+                            <th id="compTableModel2"></th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody">
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Supabase configuration -->
+    <script src="js/config.js"></script>
+
+    <!-- Authentication logic -->
+    <script src="js/auth.js"></script>
+
+    <!-- Models CRUD logic -->
+    <script src="js/models.js"></script>
+
+    <script>
+        // jQuery: Initialize compare page when page loads
+        $(document).ready(function() {
+            // Cek autentikasi user dengan JWT
+            checkAuth();
+
+            // Load models untuk dropdown selection
+            loadModelsForComparison();
+        });
+    </script>
+</body>
+</html>

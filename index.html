@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Comparer - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">AI Comparer</h1>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Beranda</a>
+                <a href="compare.html" class="nav-link">Compare Models</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" id="loginLink" class="btn btn-icon">Login</a>
+                <a href="register.html" id="registerLink" class="btn btn-primary btn-navbar">Daftar</a>
+                <button id="logoutBtn" class="btn btn-secondary btn-navbar" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="container hero-section">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <h2 class="hero-title">Bandingkan kemampuan model AI dengan mudah</h2>
+                <p class="hero-desc">AI Comparer membantu Anda membandingkan performa, panjang konteks, dan kapabilitas model AI dari berbagai provider dalam satu tempat.</p>
+                <div class="hero-actions">
+                    <a href="register.html" class="btn btn-primary btn-large">Mulai Sekarang</a>
+                    <a href="compare.html" class="btn btn-secondary btn-large">Lihat Perbandingan</a>
+                </div>
+            </div>
+            <div class="hero-models">
+                <div class="selection-box models-box">
+                    <h3 class="models-title">Contoh Model</h3>
+                    <p class="text-muted">GPT-4 · Claude 3 · Llama · Mistral</p>
+                    <div class="models-capabilities">
+                        <span class="capability-badge">Text</span>
+                        <span class="capability-badge">Vision</span>
+                        <span class="capability-badge">Code</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features -->
+    <section class="container">
+        <div class="compare-selection section-margin">
+            <div class="selection-box">
+                <h3>Perbandingan Cepat</h3>
+                <p class="text-muted">Bandingkan metrik penting seperti benchmark score dan context length secara side-by-side.</p>
+            </div>
+
+            <div class="selection-box">
+                <h3>Kelola Model</h3>
+                <p class="text-muted">Tambah, edit, dan simpan model yang Anda butuhkan untuk analisa di dashboard.</p>
+            </div>
+        </div>
+
+        <div class="comparison-cards">
+            <div class="comparison-card">
+                <h4 class="model-card-title">Sederhana & Cepat</h4>
+                <p class="text-muted">Antarmuka yang ringan untuk mendapatkan perbandingan jelas dan actionable.</p>
+            </div>
+
+            <div class="vs-divider">
+                <span>VS</span>
+            </div>
+
+            <div class="comparison-card">
+                <h4 class="model-card-title">Kolaborasi</h4>
+                <p class="text-muted">Simpan hasil perbandingan dan bagikan temuan dengan tim Anda.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-flex">
+            <div>
+                <strong>AI Comparer</strong>
+                <p class="text-muted footer-copyright">© 2025 AI Comparer. All rights reserved.</p>
+            </div>
+            <div class="text-muted">Built with ❤️ · <a href="compare.html">Compare</a> · <a href="dashboard.html">Dashboard</a></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk cek apakah user sudah login
+            function checkAndRedirectIfLoggedIn() {
+                const token = getToken();
+                
+                // Jika user sudah login (token ada dan tidak expired), redirect ke dashboard
+                if (token && !isTokenExpired(token)) {
+                    window.location.href = 'dashboard.html';
+                    return true;
+                }
+                return false;
+            }
+
+            // Fungsi untuk update UI berdasarkan login status
+            function updateNavbarForAuthStatus() {
+                const token = getToken();
+                const isLoggedIn = token && !isTokenExpired(token);
+
+                if (isLoggedIn) {
+                    // Sembunyikan login dan register links
+                    $('#loginLink').hide();
+                    $('#registerLink').hide();
+
+                    // Tampilkan logout button
+                    $('#logoutBtn').show();
+                } else {
+                    // Tampilkan login dan register links
+                    $('#loginLink').show();
+                    $('#registerLink').show();
+
+                    // Sembunyikan logout button
+                    $('#logoutBtn').hide();
+                }
+            }
+
+            // Cek dan redirect jika sudah login
+            checkAndRedirectIfLoggedIn();
+
+            // Update navbar UI
+            updateNavbarForAuthStatus();
+
+            // Handler untuk logout button
+            $('#logoutBtn').on('click', function() {
+                removeToken();
+                updateNavbarForAuthStatus();
+                showAlert('Logout berhasil!', 'success');
+                setTimeout(function() {
+                    window.location.href = 'index.html';
+                }, 500);
+            });
+        });
+
+        // Helper untuk menampilkan alert
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-' + type;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.maxWidth = '300px';
+            alertDiv.textContent = message;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(function() {
+                alertDiv.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
